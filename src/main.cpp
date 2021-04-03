@@ -126,7 +126,7 @@ void setup() {
   shutdownHandler.attach(5, handleShutdown);
 
   // TODO: 次回配信時間取得
-  //updateNextTime();
+  updateNextTime();
   lastUpdateTime = getNowSec();
   debugPrintTime(lastUpdateTime);
 
@@ -140,8 +140,8 @@ void setup() {
       ledStatuses[id].nextChangeTime = now + LED_ON_MS;
     } else {
       Serial.printf("led off, id = %d\n", id);
-      //fullColorLedDriver->drive(id, {0, 0, 0});
-      fullColorLedDriver->drive(id, channel.color);
+      fullColorLedDriver->drive(id, {0, 0, 0});
+      //fullColorLedDriver->drive(id, channel.color);
     }
     id++;
   }
