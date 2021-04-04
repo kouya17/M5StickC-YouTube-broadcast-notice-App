@@ -2,7 +2,7 @@
 
 ## Demo
 
-- movie(japasene)
+- movie(japanese)
   - https://youtu.be/wH_MpRYkO2Q
 
 ## Required parts
