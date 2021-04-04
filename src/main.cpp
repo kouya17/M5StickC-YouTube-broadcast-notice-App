@@ -39,7 +39,7 @@ static void shutdown(void);
 static void reserveShutdown(void);
 static time_t getNowSec(void);
 static void debugPrintTime(const time_t &time);
-static void updateNextTime();
+static void updateNextStreamTime();
 static tm getCloser(tm &one, tm &two);
 static void handleShutdown();
 static int getDiffHourFromNow(tm &nextTime);
@@ -125,8 +125,7 @@ void setup() {
   attachInterrupt(PIN_SHUTDOWN, reserveShutdown, FALLING);
   shutdownHandler.attach(5, handleShutdown);
 
-  // TODO: 次回配信時間取得
-  updateNextTime();
+  updateNextStreamTime();
   lastUpdateTime = getNowSec();
   debugPrintTime(lastUpdateTime);
 
@@ -141,7 +140,6 @@ void setup() {
     } else {
       Serial.printf("led off, id = %d\n", id);
       fullColorLedDriver->drive(id, {0, 0, 0});
-      //fullColorLedDriver->drive(id, channel.color);
     }
     id++;
   }
@@ -197,7 +195,7 @@ static void debugPrintTime(const time_t &time) {
   Serial.printf("lastUpdateTime: %s\n", date);
 }
 
-static void updateNextTime() {
+static void updateNextStreamTime() {
   for (auto &channel: channels) {
     Serial.println("--- chennal: " + channel.id + " ---");
     std::vector<String> videos = api.getUpcomingBroadcasts(channel.id);
